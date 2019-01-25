@@ -100,7 +100,11 @@ class Middleware
         ];
         $oGuzzleBypass = new Stream($sUrl, stream_context_create($aOpts));
         // nobody should use static functions, this is madness
-        (new CFBypasser)->exec($oGuzzleBypass, 'CFStreamContext', ['max_retries' => 5, 'cache' => false]);
+        (new CFBypasser)->exec(
+            $oGuzzleBypass,
+            'CFStreamContext',
+            ['max_retries' => 5, 'cache' => false, 'verbose_mode' => false]
+        );
         return $oRequest->withHeader(
             'Cookie',
             array_merge([$oGuzzleBypass->getHeader("cookie")], $oRequest->getHeader('Cookie'))
