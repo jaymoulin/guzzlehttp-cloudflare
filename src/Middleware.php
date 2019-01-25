@@ -101,6 +101,9 @@ class Middleware
         $oGuzzleBypass = new Stream($sUrl, stream_context_create($aOpts));
         // nobody should use static functions, this is madness
         (new CFBypasser)->exec($oGuzzleBypass, 'CFStreamContext', ['max_retries' => 5, 'cache' => false]);
-        return $oRequest->withAddedHeader('Cookie', $oGuzzleBypass->getHeader("cookie"));
+        return $oRequest->withHeader(
+            'Cookie',
+            array_merge([$oGuzzleBypass->getHeader("cookie")], $oRequest->getHeader('Cookie'))
+        );
     }
 }
