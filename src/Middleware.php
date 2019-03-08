@@ -16,21 +16,24 @@ class Middleware
 
     /** @var callable $cNextHandler */
     private $cNextHandler;
+    /** @var array $aOptions */
+    private $aOptions = [];
 
     /**
      * Middleware constructor.
      * @param callable $cNextHandler
      */
-    public function __construct(callable $cNextHandler)
+    public function __construct(callable $cNextHandler, array $aOptions = [])
     {
         $this->cNextHandler = $cNextHandler;
+        $this->aOptions = $aOptions;
     }
 
 
-    public static function create(): \Closure
+    public static function create(array $aOptions = []): \Closure
     {
-        return function ($cHandler) {
-            return new static($cHandler);
+        return function ($cHandler) use ($aOptions) {
+            return new static($cHandler, $aOptions);
         };
     }
 
@@ -103,7 +106,10 @@ class Middleware
         (new CFBypasser)->exec(
             $oGuzzleBypass,
             'CFStreamContext',
-            ['max_retries' => 5, 'cache' => false, 'verbose_mode' => false]
+            array_merge(
+                ['max_retries' => 5, 'cache' => false, 'verbose_mode' => false],
+                $this->aOptions
+            )
         );
         return $oRequest->withHeader(
             'Cookie',

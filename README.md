@@ -31,9 +31,12 @@ $oClient = new \GuzzleHttp\Client([
     'cookies' => new \GuzzleHttp\Cookie\FileCookieJar(tempnam('/tmp', __CLASS__)),
     'headers' => ['Referer' => $sUrl],
 ]); // 1. Create Guzzle instance
+$aOptions = [
+    'cache' => new \CloudflareBypass\Storage($sPathToYouCacheFolder),
+]; // Example for cache, this is completely optional
 /** @var \GuzzleHttp\HandlerStack $oHandler */
 $oHandler = $oClient->getConfig('handler');
-$oHandler->push(\GuzzleCloudflare\Middleware::create()); //2. ???
+$oHandler->push(\GuzzleCloudflare\Middleware::create($aOptions)); //2. ???
 
 echo (string)$oClient->request('GET', $sUrl)->getBody(); //3. Profit!!
 ```
