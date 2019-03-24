@@ -113,7 +113,7 @@ class Middleware
         );
         return $oRequest->withHeader(
             'Cookie',
-            array_merge([$oGuzzleBypass->getHeader("cookie")], $oRequest->getHeader('Cookie'))
+            array_merge([$oGuzzleBypass->getRequestHeader("cookie")], $oRequest->getHeader('Cookie'))
         );
     }
 }
