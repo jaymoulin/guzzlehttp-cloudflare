@@ -32,8 +32,8 @@ $oClient = new \GuzzleHttp\Client([
     'headers' => ['Referer' => $sUrl],
 ]); // 1. Create Guzzle instance
 $aOptions = [
-    'cache' => new \CloudflareBypass\Storage($sPathToYouCacheFolder),
-]; // Example for cache, this is completely optional
+    'cache' => new \CloudflareBypass\Storage($sPathToYourCacheFolder),
+]; // Example for cache, this is completely optional, with $sPathToYourCacheFolder a string to your cache folder
 /** @var \GuzzleHttp\HandlerStack $oHandler */
 $oHandler = $oClient->getConfig('handler');
 $oHandler->push(\GuzzleCloudflare\Middleware::create($aOptions)); //2. ???
