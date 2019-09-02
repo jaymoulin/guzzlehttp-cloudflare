@@ -8,4 +8,4 @@ vendor:
 	docker run --rm -ti -v "${PWD}:/app" composer install
 
 test: vendor
-	docker run --rm --name guzzlecloudtest -ti -v ${PWD}:/app/ -w /app php:7.1-alpine php -d max_execution_time=5 vendor/bin/phpunit
+	docker run --rm --name guzzlecloudtest -ti -v ${PWD}:/app/ -w /app php:7.2-alpine php -d max_execution_time=5 vendor/bin/phpunit

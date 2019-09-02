@@ -28,7 +28,7 @@ class Middleware extends \PHPUnit\Framework\TestCase
         $oResponse = $oClient->request('GET', $sUrl);
 
         $this->assertSame(200, $oResponse->getStatusCode());
-        $this->assertContains('This site uses cookies', (string)$oResponse->getBody());
+        $this->assertStringContainsString('This site uses cookies', (string)$oResponse->getBody());
     }
 
     /**
@@ -52,7 +52,7 @@ class Middleware extends \PHPUnit\Framework\TestCase
         $oResponse = $oClient->request('GET', $sUrl . '/login');
 
         $this->assertSame(200, $oResponse->getStatusCode());
-        $this->assertContains('This site uses cookies', (string)$oResponse->getBody());
+        $this->assertStringContainsString('This site uses cookies', (string)$oResponse->getBody());
         if (!preg_match('~name="_xfToken" value="([^"]+)" />~', (string)$oResponse->getBody(), $aMatches)) {
             $this->assertTrue(false, "Unable to get xfToken");
         }
@@ -64,6 +64,6 @@ class Middleware extends \PHPUnit\Framework\TestCase
             '_xfToken' => $aMatches[1],
         ];
         $oResponse = $oClient->request('POST', $sUrl . '/login/login', ['form_params' => $aParams]);
-        $this->assertContains('jaymoulin', (string)$oResponse->getBody());
+        $this->assertStringContainsString('jaymoulin', (string)$oResponse->getBody());
     }
 }
