@@ -66,4 +66,28 @@ class Middleware extends \PHPUnit\Framework\TestCase
         $oResponse = $oClient->request('POST', $sUrl . '/login/login', ['form_params' => $aParams]);
         $this->assertStringContainsString('jaymoulin', (string)$oResponse->getBody());
     }
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function testThirdVersionCloudflare()
+    {
+        $sUrl = 'http://www.mangago.me/';
+        $oClient = new \GuzzleHttp\Client(
+            [
+                'cookies' => new \GuzzleHttp\Cookie\FileCookieJar(tempnam('/tmp', __CLASS__)),
+                'headers' => ['Referer' => $sUrl],
+            ]
+        );
+        /**
+         * @var \GuzzleHttp\HandlerStack $oHandler
+         */
+        $oHandler = $oClient->getConfig('handler');
+        $oHandler->push(\GuzzleCloudflare\Middleware::create());
+
+        $oResponse = $oClient->request('GET', $sUrl);
+
+        $this->assertSame(200, $oResponse->getStatusCode());
+        $this->assertStringContainsString('Read Manga Online For Free', (string)$oResponse->getBody());
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace GuzzleCloudflare;
 
-use CloudflareBypass\RequestMethod\Stream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use \CloudflareBypass\CFBypasser;
+use CloudflareBypass\CFCurlImpl;
+use CloudflareBypass\Model\UAMOptions;
 
 class Middleware
 {
@@ -89,31 +89,20 @@ class Middleware
     protected function hackRequest(RequestInterface $oRequest): RequestInterface
     {
         $sUrl = $oRequest->getUri();
-        $aInfo = parse_url($sUrl);
-        $sDomain = $aInfo['host'];
-        $aOpts = [
-            'http' => [
-                'method' => $oRequest->getMethod(),
-                'header' => [
-                    'accept: */*', // required
-                    'host: ' . $sDomain, // required
-                    'user-agent: ' . ($oRequest->getHeader('User-Agent')[0] ?? self::USER_AGENT),
-                ]
-            ]
-        ];
-        $oGuzzleBypass = new Stream($sUrl, stream_context_create($aOpts));
-        // nobody should use static functions, this is madness
-        (new CFBypasser)->exec(
-            $oGuzzleBypass,
-            'CFStreamContext',
-            array_merge(
-                ['max_retries' => 5, 'cache' => false, 'verbose_mode' => false],
-                $this->aOptions
-            )
-        );
+        $oCurlInstance = \curl_init($sUrl);
+        \curl_setopt($oCurlInstance, \CURLOPT_RETURNTRANSFER, true);
+        \curl_setopt($oCurlInstance, \CURLOPT_USERAGENT, ($oRequest->getHeader('User-Agent')[0] ?? self::USER_AGENT));
+        $cfCurl = new CFCurlImpl();
+        $cfOptions = new UAMOptions();
+        $cfCurl->exec($oCurlInstance, $cfOptions);
+        $aCookies = curl_getinfo($oCurlInstance, \CURLINFO_COOKIELIST);
+        $aSavedCookies = [];
+        foreach ($aCookies as $sCookieLine) {
+            $aSavedCookies[] = implode('=', array_slice(explode("\t", $sCookieLine), 5, 2));
+        }
         return $oRequest->withHeader(
             'Cookie',
-            array_merge([$oGuzzleBypass->getRequestHeader("cookie")], $oRequest->getHeader('Cookie'))
+            array_merge($aSavedCookies, $oRequest->getHeader('Cookie'))
         );
     }
 }
