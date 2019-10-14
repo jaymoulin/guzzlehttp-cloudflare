@@ -13,6 +13,14 @@ class Middleware
     const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 ' .
     '(KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36';
 
+    /** @var array DEFAULT_HEADERS */
+    const DEFAULT_HEADERS =
+        [
+            'Upgrade-Insecure-Requests' => [1],
+            'User-Agent' => [self::USER_AGENT],
+            'Accept' => ['text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3'],
+            'Accept-Language' => ['en-US,en;q=0.9']
+        ];
 
     /** @var callable $cNextHandler */
     private $cNextHandler;
@@ -90,8 +98,15 @@ class Middleware
     {
         $sUrl = $oRequest->getUri();
         $oCurlInstance = \curl_init($sUrl);
+        \curl_setopt($oCurlInstance, \CURLOPT_FOLLOWLOCATION, true);
         \curl_setopt($oCurlInstance, \CURLOPT_RETURNTRANSFER, true);
-        \curl_setopt($oCurlInstance, \CURLOPT_USERAGENT, ($oRequest->getHeader('User-Agent')[0] ?? self::USER_AGENT));
+        \curl_setopt($oCurlInstance, \CURLINFO_HEADER_OUT, true);
+        $oHeaders = array_merge(self::DEFAULT_HEADERS, $oRequest->getHeaders());
+        $cfHeaders = [];
+        foreach ($oHeaders as $oHeader => $oHeaderValue) {
+            $cfHeaders[] = $oHeader . ': ' . implode(';', $oHeaderValue);
+        }
+        \curl_setopt($oCurlInstance, \CURLOPT_HTTPHEADER, $cfHeaders);
         $cfCurl = new CFCurlImpl();
         $cfOptions = new UAMOptions();
         $cfCurl->exec($oCurlInstance, $cfOptions);
