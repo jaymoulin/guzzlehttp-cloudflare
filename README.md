@@ -9,7 +9,7 @@ Guzzle Cloudflare Bypass
 [![Watch Ads](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/utip.png "Watch Ads")](https://utip.io/femtopixel)
 [![PayPal donation](https://github.com/jaymoulin/jaymoulin.github.io/raw/master/ppl.png "PayPal donation")](https://www.paypal.me/jaymoulin)
 [![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png "Buy me a coffee")](https://www.buymeacoffee.com/3Yu8ajd7W)
-[![Become a Patron](https://badgen.net/badge/become/a%20patron/F96854 "Decome a Patron")](https://patreon.com/femtopixel)
+[![Become a Patron](https://badgen.net/badge/become/a%20patron/F96854 "Become a Patron")](https://patreon.com/femtopixel)
 
 
 Bypass Cloudflare DDoS protection - Please use it carefully
