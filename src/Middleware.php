@@ -99,13 +99,15 @@ class Middleware
      */
     protected function hackRequest(RequestInterface $oRequest): RequestInterface
     {
-        $sUrl = $oRequest->getUri();
+        $sUrl = $oRequest->getUri()__toString();//__toString() to fix error "Undefined index: request_header"
         $oCurlInstance = \curl_init($sUrl);
         \curl_setopt($oCurlInstance, \CURLOPT_FOLLOWLOCATION, true);
         \curl_setopt($oCurlInstance, \CURLOPT_RETURNTRANSFER, true);
         \curl_setopt($oCurlInstance, \CURLINFO_HEADER_OUT, true);
         /** @var string[][] $aHeaders */
         $aHeaders = array_merge(self::DEFAULT_HEADERS, $oRequest->getHeaders());
+        //if header contain Content-Length, the curl_exec will return false
+        unset($aHeaders['Content-Length']);
         $aCfHeaders = [];
         foreach ($aHeaders as $sHeaderType => $aHeaderValue) {
             $aCfHeaders[] = $sHeaderType . ': ' . implode(';', $aHeaderValue);
