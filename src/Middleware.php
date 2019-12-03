@@ -106,6 +106,8 @@ class Middleware
         \curl_setopt($oCurlInstance, \CURLINFO_HEADER_OUT, true);
         /** @var string[][] $aHeaders */
         $aHeaders = array_merge(self::DEFAULT_HEADERS, $oRequest->getHeaders());
+        //if the method is post and header contain Content-Length, the curl_exec will return false and bypass go wrong
+        unset($aHeaders['Content-Length']);
         $aCfHeaders = [];
         foreach ($aHeaders as $sHeaderType => $aHeaderValue) {
             $aCfHeaders[] = $sHeaderType . ': ' . implode(';', $aHeaderValue);
