@@ -8,7 +8,7 @@
     },
     "require": {
         "php": "^7.2",
-        "kyranrana/cloudflare-bypass": "^v3.0",
+        "jaymoulin/cloudflare-bypass": "dev-master",
         "guzzlehttp/guzzle": "^6.3",
         "ext-curl": "*",
         "ext-bcmath": "*"
@@ -33,6 +33,10 @@
         "phpcpd": "phpcpd src --log-pmd=build/logs/cpd.xml"
     },
     "license": "MIT",
+    "support": {
+        "issues": "http://github.com/jaymoulin/guzzlehttp-cloudflare/issues",
+        "source": "https://github.com/jaymoulin/guzzlehttp-cloudflare"
+    },
     "authors": [
         {
             "name": "Jay MOULIN",
