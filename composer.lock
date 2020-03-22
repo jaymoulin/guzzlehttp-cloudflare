@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df49566fe9744685b8d67b3ee686e42b",
+    "content-hash": "50d1f88cf61f57c552ac37c4fb4fc3d8",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -197,16 +197,16 @@
         },
         {
             "name": "jaymoulin/cloudflare-bypass",
-            "version": "dev-master",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaymoulin/cloudflare-bypass.git",
-                "reference": "2ef25943deb77ca8eaa5b6815b4cbe47c9d241c5"
+                "reference": "7737890098c17f57eb7bba1c453dae7b5f616e21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaymoulin/cloudflare-bypass/zipball/2ef25943deb77ca8eaa5b6815b4cbe47c9d241c5",
-                "reference": "2ef25943deb77ca8eaa5b6815b4cbe47c9d241c5",
+                "url": "https://api.github.com/repos/jaymoulin/cloudflare-bypass/zipball/7737890098c17f57eb7bba1c453dae7b5f616e21",
+                "reference": "7737890098c17f57eb7bba1c453dae7b5f616e21",
                 "shasum": ""
             },
             "require": {
@@ -236,7 +236,7 @@
                 }
             ],
             "description": "A library for helping bypass the cloudflare UAM page.",
-            "time": "2020-03-14T20:51:15+00:00"
+            "time": "2020-03-22T15:03:24+00:00"
         },
         {
             "name": "krowinski/bcmath-extended",
@@ -3146,9 +3146,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jaymoulin/cloudflare-bypass": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
