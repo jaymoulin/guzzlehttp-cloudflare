@@ -11,6 +11,8 @@ Guzzle Cloudflare Bypass
 
 (This product is available under a free and permissive license, but needs financial support to sustain its continued improvements. In addition to maintenance and stability there are many desirable features yet to be added.)
 
+IMPORTANT NOTE: as KyranRana's dependency is actually not maintained anymore (https://github.com/KyranRana/cloudflare-bypass/commit/00d34f0050b817b858bbf5fd349b9911932f353f), this package won't be as-well. Thank you for your understanding. Please have a look at my other works (https://github.com/jaymoulin | https://twitch.tv/cursedware | https://patreon.com/jaymoulin | https://discord.gg/ujjrPCu | https://jaymoulin.me)
+
 Bypass Cloudflare DDoS protection - Please use it carefully
 
 This package is based on [KyranRana's cloudflare-bypass](https://github.com/KyranRana/cloudflare-bypass).
